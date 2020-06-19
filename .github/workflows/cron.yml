@@ -2,11 +2,9 @@ on:
   issues:
     types: [opened]
 
-name: Cron
-
 jobs:
   build:
-    name: Upload Release Asset
+    name: Scrape Cron
     runs-on: ubuntu-latest
     steps:
       - name: Set up Go 1.x
@@ -26,22 +24,22 @@ jobs:
               dep ensure
           fi
 
-      - name: run
-        run: go run .
+      # - name: run
+      #   run: go run .
 
-      - name: Commit files
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -m "cron: new data" -a
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Commit files
+      #   run: |
+      #     git config --local user.email "action@github.com"
+      #     git config --local user.name "GitHub Action"
+      #     git commit -m "cron: new data" -a
+      # - name: Push changes
+      #   uses: ad-m/github-push-action@master
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Zip artifact
         run: |
-          zip --junk-paths streams ./data
+          zip --junk-paths -r streams data
 
       - name: Create Release
         id: create_release
