@@ -1,6 +1,6 @@
 on:
-  issues:
-    types: [opened]
+  schedule:
+    - cron: "0 12 * * *"
 
 jobs:
   build:
@@ -24,18 +24,18 @@ jobs:
               dep ensure
           fi
 
-      # - name: run
-      #   run: go run .
+      - name: run
+        run: go run .
 
-      # - name: Commit files
-      #   run: |
-      #     git config --local user.email "action@github.com"
-      #     git config --local user.name "GitHub Action"
-      #     git commit -m "cron: new data" -a
-      # - name: Push changes
-      #   uses: ad-m/github-push-action@master
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "cron: new data" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Zip artifact
         run: |
@@ -60,5 +60,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./streams.zip
-          asset_name: stream.zip
+          asset_name: streams.zip
           asset_content_type: application/zip
