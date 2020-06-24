@@ -1,3 +1,5 @@
+name: Scrape Cron
+
 on:
   schedule:
     - cron: "0 12 * * *"
